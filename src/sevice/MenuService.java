@@ -79,11 +79,11 @@ public class MenuService {
       case "yes" -> registerCitizenMenu();
       case "no"-> mainMenu();
       default -> {
-        
-      }
-      System.out.println("Please type 'Yes' to continue and 'No' to go back to the main menu");
+        System.out.println("Please type 'Yes' to continue and 'No' to go back to the main menu");
         doContinue();
         break;
+      }
+      
     }
     return false;
   }
