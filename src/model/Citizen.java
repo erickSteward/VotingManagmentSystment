@@ -14,6 +14,7 @@ public class Citizen {
 
 
   public Citizen() {
+    
   }
 
 
