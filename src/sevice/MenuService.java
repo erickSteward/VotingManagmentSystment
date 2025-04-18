@@ -9,9 +9,34 @@ public class MenuService {
 
   private Scanner scanner = new Scanner(System.in);
   CitizenDao citizenDao;
+  CitizenService citizenService;
 
     public MenuService(CitizenDao citizenDao) {
         this.citizenDao = citizenDao;
+        this.citizenService = new CitizenService();
+    }
+
+    public MenuService() {
+
+    }
+
+    public void mainMenu() {
+
+            System.out.println("********* Welcome to the Voting Management System ********* ");
+            System.out.println("Please select the actions you need. ");
+            System.out.println("1. Register Citizen. ");
+            System.out.println("2. View All Registered Citizens");
+            System.out.print("What's your choice?");
+            int choice = scanner.nextInt();
+            switch (choice) {
+                case 1:
+                    citizenService.citizenRegisterService();
+                case 2:
+                    citizenService.citizenRetrievalService();
+                default:
+                    System.out.println("bye");
+                    break;
+            }
     }
 
 
@@ -47,6 +72,7 @@ public class MenuService {
 
        if(citizenDao.createCitizen(birthCertificateNo, fistName, lastName, nationalId, location, ward,constituency, county, ethnicity) != null){
            System.out.println("Registration updated the Citizen List. ");
+           doContinue();
            return true;
        } else {
            System.out.println("Registration not updated to the Citizen List");
@@ -65,7 +91,6 @@ public class MenuService {
        default -> {
          System.out.println("Please type 'Yes' to continue and 'No' to go back to the main menu");
          doContinue();
-         break;
        }
       
      }

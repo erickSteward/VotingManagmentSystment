@@ -13,7 +13,8 @@ public class CitizenService {
   private Citizen citizen;
   private MenuService menuService;
 
-
+  public CitizenService() {
+  }
 
   public CitizenService(MenuService menuService){
     this.menuService = menuService;

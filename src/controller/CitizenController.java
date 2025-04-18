@@ -9,9 +9,11 @@ public class CitizenController {
  private Scanner scanner = new Scanner(System.in);
  private CitizenService citizenServices;
 
+    public CitizenController(CitizenService citizenServices) {
+        this.citizenServices = citizenServices;
+    }
 
-
-   public boolean registerCitizen(){
+    public boolean registerCitizen(){
      return citizenServices.citizenRegisterService();
    }
 

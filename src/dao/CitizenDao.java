@@ -7,7 +7,6 @@ import java.util.List;
 
 public class CitizenDao {
     private List<Citizen> citizens = new ArrayList<>();
-    private Citizen citizen;
 
     public Citizen createCitizen(int birthCertificateNumber,
                                          String firstName,
