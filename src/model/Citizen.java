@@ -126,9 +126,9 @@ public class Citizen {
 
   @Override
   public String toString() {
-    return "Citizen [birthCertificateNo=" + birthCertificateNo + ", firstName=" + firstName + ", lastName=" + lastName
-        + ", dateOfBirth=" + ", nationalId=" + nationalId + ", location=" + location + ", ward=" + ward
-        + ", constituency=" + constituency + ", County=" + county + ", ethnicity=" + ethnicity + "]";
+    return "[ \n birthCertificateNo=" + birthCertificateNo + "\n" +"First Name = " + firstName + "\n" + "Last Name = " + lastName +
+        "\n" +  "National ID =" + nationalId + "\n" + "Location = " + location + "\n" +  "Ward = " + ward
+        + "\n" + "Constituency = " + constituency + "County = " + county + "\n" + "Ethnicity = " + ethnicity + "]";
   }
 
 
