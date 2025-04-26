@@ -1,7 +1,6 @@
 package controller;
 
 import sevice.CitizenService;
-import sevice.MenuService;
 
 import java.util.Scanner;
 
@@ -13,12 +12,19 @@ public class CitizenController {
         this.citizenServices = citizenServices;
     }
 
-    public boolean registerCitizen(){
-     return citizenServices.citizenRegisterService();
+    public void registerCitizen(){
+     if(citizenServices.registerCitizenService() != null){
+         System.out.println("Registration Successful");
+     } else {
+         System.out.println("Registration failed");
+     }
    }
 
    public void retrieveAllCitizens(){
-     citizenServices.citizenRetrievalService();
+       citizenServices.retrievalAllCitizenService();
    }
-  
+
+    public void retrieveACitizen() {
+        citizenServices.retrieveACitizenService();
+    }
 }

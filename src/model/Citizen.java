@@ -1,5 +1,7 @@
 package model;
 
+import java.util.List;
+
 public class Citizen {
   
   private int birthCertificateNo;
@@ -12,9 +14,17 @@ public class Citizen {
   private String county;
   private String ethnicity;
 
+  private List<Citizen> citizenList;
+
 
   public Citizen() {
     
+  }
+
+  public Citizen(List citizenList){
+    for(Object citizen : citizenList){
+      System.out.println(citizen);
+    }
   }
 
 
@@ -126,7 +136,7 @@ public class Citizen {
 
   @Override
   public String toString() {
-    return "[ \n birthCertificateNo=" + birthCertificateNo + "\n" +"First Name = " + firstName + "\n" + "Last Name = " + lastName +
+    return "[Detail for " + firstName + " " + lastName + "\nbirthCertificateNo=" + birthCertificateNo + "\n" +"First Name = " + firstName + "\n" + "Last Name = " + lastName +
         "\n" +  "National ID =" + nationalId + "\n" + "Location = " + location + "\n" +  "Ward = " + ward
         + "\n" + "Constituency = " + constituency + "County = " + county + "\n" + "Ethnicity = " + ethnicity + "]";
   }

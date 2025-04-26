@@ -8,24 +8,38 @@ import java.util.List;
 public class CitizenDao {
     private List<Citizen> citizens = new ArrayList<>();
 
-    public Citizen createCitizen(int birthCertificateNumber,
-                                         String firstName,
-                                         String lastName,
-                                         int nationalId,
-                                         String location,
-                                         String ward,
-                                         String constituency,
-                                         String county,
-                                         String ethnicity){
-
-        return new Citizen(
-                birthCertificateNumber, firstName, lastName, nationalId, location, ward, constituency, county, ethnicity
+    public Citizen createCitizen(Citizen citizen){
+        citizen = new Citizen(
+                citizen.getBirthCertificateNo(),
+                citizen.getFirstName(),
+                citizen.getLastName(),
+                citizen.getNationalId(),
+                citizen.getLocation(),
+                citizen.getWard(),
+                citizen.getConstituency(),
+                citizen.getCounty(),
+                citizen.getEthnicity()
         );
+        addCitizen(citizen);
+        return citizen;
     }
 
-    public void getAllCitizens() {
-        for(Citizen citizen : citizens){
-            System.out.println(citizen);
-        }
+    private void addCitizen(Citizen citizen){
+        citizens.add(citizen);
     }
+
+    public List<Citizen> getAllCitizens() {
+        return citizens;
+    }
+
+    public String getCitizenById(int nationalID){
+        for (Citizen citizen : citizens){
+            if(citizen.getNationalId() == nationalID){
+                return citizen.toString();
+            }
+        }
+        return "Citizen not Found";
+    }
+
+
 }
