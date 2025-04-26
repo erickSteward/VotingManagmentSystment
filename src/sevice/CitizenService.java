@@ -54,7 +54,7 @@ public class CitizenService {
       if(!citizenDao.getCitizenById(nationalId).isEmpty()){
           System.out.println(citizenDao.getCitizenById(nationalId));
       } else {
-          System.out.println("Opp, No Such citizen");
+          System.out.println("Opp, No Such citizen..");
       }
   }
 
@@ -75,4 +75,9 @@ public class CitizenService {
           }
       }
   }
+
+    public void editCitizenService() {
+        int nationalId = getIntInput("Enter national ID : ");
+
+    }
 }

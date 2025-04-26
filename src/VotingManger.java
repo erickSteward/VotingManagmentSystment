@@ -35,6 +35,11 @@ public class VotingManger {
                 citizenController.retrieveACitizen();
                 run();
             }
+
+            case "4" -> {
+                citizenController.editCitizen();
+                run();
+            }
             default -> {
                 System.out.println("Please choose the appropriate number in the menu select.");
                 run();

@@ -27,4 +27,8 @@ public class CitizenController {
     public void retrieveACitizen() {
         citizenServices.retrieveACitizenService();
     }
+
+    public void editCitizen() {
+        citizenServices.editCitizenService();
+    }
 }

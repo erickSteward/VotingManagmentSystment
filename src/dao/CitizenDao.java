@@ -41,5 +41,18 @@ public class CitizenDao {
         return "Citizen not Found";
     }
 
+    public String editCitizen(int nationalID){
+        if(!getCitizenById(nationalID).equals("Citizen not Found")){
+
+        }
+
+    }
+
+    public int editCitizenNationalID(String prompt){
+        for(Citizen citizen : citizens){
+            citizen.getNationalId();
+        }
+    }
+
 
 }
