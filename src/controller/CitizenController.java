@@ -31,4 +31,8 @@ public class CitizenController {
     public void editCitizen() {
         citizenServices.editCitizenService();
     }
+
+    public void deleteACitizen() {
+        citizenServices.deleteACitizenService();
+    }
 }

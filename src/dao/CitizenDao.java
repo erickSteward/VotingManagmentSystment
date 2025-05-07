@@ -4,9 +4,13 @@ import model.Citizen;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
 public class CitizenDao {
-    private List<Citizen> citizens = new ArrayList<>();
+    private static List<Citizen> citizens = new ArrayList<>();
+    private Scanner scanner = new Scanner(System.in);
+
+
 
     public Citizen createCitizen(Citizen citizen){
         citizen = new Citizen(
@@ -32,27 +36,40 @@ public class CitizenDao {
         return citizens;
     }
 
-    public String getCitizenById(int nationalID){
+    public Citizen getCitizenById(int nationalID){
         for (Citizen citizen : citizens){
             if(citizen.getNationalId() == nationalID){
-                return citizen.toString();
+                return citizen;
             }
         }
-        return "Citizen not Found";
+        return null;
     }
 
-    public String editCitizen(int nationalID){
-        if(!getCitizenById(nationalID).equals("Citizen not Found")){
 
+    public static Citizen getCitizenByLastName(String lastName) {
+        for (Citizen citizen : citizens){
+            if(lastName.equalsIgnoreCase(citizen.getLastName())){
+                return citizen;
+            }
         }
-
+        return null;
     }
 
-    public int editCitizenNationalID(String prompt){
-        for(Citizen citizen : citizens){
-            citizen.getNationalId();
+    public static Citizen getCitizenByFirstName(String firstName) {
+        for (Citizen citizen : citizens){
+            if(firstName.equalsIgnoreCase(citizen.getFirstName())){
+                return citizen;
+            }
         }
+        return null;
     }
 
 
+    public boolean deleteACitizenDao(int deleteCitizenId) {
+        Citizen citizen = getCitizenById(deleteCitizenId);
+        if(citizen != null){
+            citizens.remove(citizen);
+        }
+        return  false;
+    }
 }

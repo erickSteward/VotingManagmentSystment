@@ -136,14 +136,8 @@ public class Citizen {
 
   @Override
   public String toString() {
-    return "[Detail for " + firstName + " " + lastName + "\nbirthCertificateNo=" + birthCertificateNo + "\n" +"First Name = " + firstName + "\n" + "Last Name = " + lastName +
-        "\n" +  "National ID =" + nationalId + "\n" + "Location = " + location + "\n" +  "Ward = " + ward
-        + "\n" + "Constituency = " + constituency + "County = " + county + "\n" + "Ethnicity = " + ethnicity + "]";
+    return "[Detail for " + firstName + " " + lastName + "birthCertificateNo = " + birthCertificateNo + "First Name = " + firstName + "Last Name = " + lastName + "National ID = " + nationalId + "Location = " + location + "Ward = " + ward
+        + "Constituency = " + constituency + "County = " + county + "Ethnicity = " + ethnicity + "]";
   }
-
-
-  
-
-  
 
 }
