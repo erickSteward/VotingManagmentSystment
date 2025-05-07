@@ -2,6 +2,7 @@ import controller.CitizenController;
 import dao.CitizenDao;
 import sevice.CitizenService;
 
+import java.sql.SQLException;
 import java.util.Scanner;
 
 public class VotingManger {
@@ -11,7 +12,7 @@ public class VotingManger {
     public  CitizenService citizenServices = new CitizenService(scanner, citizenDao);
     public  CitizenController citizenController = new CitizenController(citizenServices);
 
-    public void run(){
+    public void run() throws SQLException {
         System.out.println("Welcome mate.");
         System.out.println("Please choice the service you want.");
         System.out.println("1. Citizen Electoral Service.");
@@ -39,7 +40,7 @@ public class VotingManger {
     }
 
 
-    public void printCitizenElectoralMenu(){
+    public void printCitizenElectoralMenu() throws SQLException {
         System.out.println("\nPlease, Choose What action you want to do: ");
         System.out.println("1. Register Citizen ");
         System.out.println("2. View All Citizens ");

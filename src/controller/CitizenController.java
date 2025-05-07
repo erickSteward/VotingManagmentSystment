@@ -2,6 +2,7 @@ package controller;
 
 import sevice.CitizenService;
 
+import java.sql.SQLException;
 import java.util.Scanner;
 
 public class CitizenController {
@@ -12,7 +13,7 @@ public class CitizenController {
         this.citizenServices = citizenServices;
     }
 
-    public void registerCitizen(){
+    public void registerCitizen() throws SQLException {
      if(citizenServices.registerCitizenService() != null){
          System.out.println("Registration Successful");
      } else {
@@ -25,7 +26,7 @@ public class CitizenController {
    }
 
     public void retrieveACitizen() {
-        citizenServices.retrieveACitizenService();
+        citizenServices.retrieveCitizenService();
     }
 
     public void editCitizen() {

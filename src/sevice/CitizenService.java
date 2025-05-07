@@ -3,6 +3,7 @@ import dao.CitizenDao;
 import model.Citizen;
 
 
+import java.sql.SQLException;
 import java.util.Scanner;
 
 public class CitizenService {
@@ -18,7 +19,7 @@ public class CitizenService {
   }
 
   
-  public Citizen registerCitizenService() {
+  public Citizen registerCitizenService() throws SQLException {
       System.out.println("Please register the following citizen details as prompted : ");
 
 
@@ -34,33 +35,44 @@ public class CitizenService {
 
     if(birthCertificateNo != 0 && !fistName.isEmpty() && !lastName.isEmpty() && nationalId != 0 && !location.isEmpty() && !ward.isEmpty() && !constituency.isEmpty() && !county.isEmpty() && !ethnicity.isEmpty()) {
       citizen = new Citizen(birthCertificateNo, fistName, lastName, nationalId, location, ward, constituency, county, ethnicity);
+        try {
+            citizenDao.addCitizen(citizen);
+        } catch (Exception e){
+            e.printStackTrace();
+            System.out.println("No sasa Mambo unafanya! : " + e.getStackTrace());
+        }
     } else {
       System.out.println("Please Enter the details appropriately");
     }
       return  citizenDao.createCitizen(citizen);
   }
 
-  public void retrievalAllCitizenService(){
-      if(!citizenDao.getAllCitizens().isEmpty())
-          for (Citizen citizen1 : citizenDao.getAllCitizens()) {
-              System.out.println(citizen1);
-          }
-      else
-          System.out.println("Records Found. ");
+//  public void retrievalAllCitizenService(){
+//     // if(!citizenDao.getAllCitizens().isEmpty())
+//          for (Citizen citizen1 : citizenDao.getAllCitizens()) {
+//              System.out.println(citizen1);
+//          }
+//      else
+//          System.out.println("Records Found. ");
+//  }
+
+  public void retrieveCitizenService(){
+      System.out.println("How do you want to Retrieve Citizen's Details.");
+      System.out.println("1. Retrieve All Citizens");
+      System.out.println("2. Retrieve a Citizen by national ID");
+      System.out.println("3. Retrieve a citizen by Name.");
+
+      int choice = scanner.nextInt();
+
   }
 
-  public void retrieveACitizenService(){
-
-
-  }
-
-  public boolean retrieveCitizenByIdService() {
+  public boolean retrieveCitizenByNationalIDService() throws SQLException {
       int nationalId = getIntInput("Enter Citizen national ID: ");
-      if(citizenDao.getCitizenById(nationalId) != null ){
-          System.out.println(citizenDao.getCitizenById(nationalId));
+
+      if(citizenDao.getByNationalId(nationalId) != null) {
+          citizen = citizenDao.getByNationalId(nationalId);
+          System.out.println(citizen);
           return true;
-      } else {
-          System.out.println("Citizen not found. ");
       }
       return false;
   }
@@ -85,7 +97,7 @@ public class CitizenService {
 
     public void editCitizenService() {
       int nationalId = getIntInput("Enter national ID to Edit Citizen : ");
-      citizen = citizenDao.getCitizenById(nationalId);
+     // citizen = citizenDao.getCitizenById(nationalId);
       if(nationalId > 0 && citizen != null){
           System.out.println("What do you want to edit " + citizen.getFirstName() + "'s details");
           System.out.println("1. Birth Certificate Number.");
@@ -114,8 +126,6 @@ public class CitizenService {
                   editCitizenService();
               }
           }
-
-
       }
     }
 
@@ -174,12 +184,12 @@ public class CitizenService {
         System.out.println("Ethnicity edited to : " + citizen.getEthnicity());
     }
 
-    public void deleteACitizenService() {
-      int deleteCitizenId = getIntInput("Enter National ID to delete Citizen : ");
-      if(citizenDao.deleteACitizenDao(deleteCitizenId)){
-          System.out.println("Citizen successfully deleted");
-      } else {
-          System.out.println("There seem to be a problem. Please check you Id");
-      }
-    }
+//    public void deleteACitizenService() {
+//      int deleteCitizenId = getIntInput("Enter National ID to delete Citizen : ");
+//      if(citizenDao.deleteACitizenDao(deleteCitizenId)){
+//          System.out.println("Citizen successfully deleted");
+//      } else {
+//          System.out.println("There seem to be a problem. Please check you Id");
+//      }
+//    }
 }

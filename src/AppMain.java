@@ -2,6 +2,7 @@ import controller.CitizenController;
 import dao.CitizenDao;
 import sevice.CitizenService;
 
+import java.sql.SQLException;
 import java.util.Scanner;
 
 public class AppMain {
@@ -13,7 +14,8 @@ public class AppMain {
         launch();
     }
 
-    public static void launch(){
+
+    public static void launch() throws SQLException {
         VotingManger votingManger = new VotingManger();
         votingManger.run();
     }
