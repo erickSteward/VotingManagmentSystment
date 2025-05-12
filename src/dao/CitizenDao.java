@@ -2,7 +2,7 @@ package dao;
 
 import model.Citizen;
 
-import java.security.PublicKey;
+
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -14,7 +14,7 @@ public class CitizenDao {
 
     public void addCitizen(Citizen citizen) throws SQLException {
         String sql = "INSERT INTO citizen (birth_certificate_no, first_name, last_name, national_id, location, ward, constituency, county, ethnicity) VALUES ( ?, ?, ?, ?, ?, ?, ?, ?, ? )";
-        try(Connection conn = DatabaseConfiguration.getConnetion();
+        try(Connection conn = DatabaseConfiguration.getConnection();
             PreparedStatement preparedStatement = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)){
 
             preparedStatement.setInt(1,    citizen.getBirthCertificateNo());
@@ -49,9 +49,27 @@ public class CitizenDao {
     public Citizen getByNationalId(int id) throws SQLException {
         String sql = "SELECT * FROM citizen WHERE national_id = ?";
 
-        try(Connection connection = DatabaseConfiguration.getConnetion();
-        PreparedStatement preparedStatement = connection.prepareStatement(sql)){
-            preparedStatement.setInt(4, id);
+        try(Connection connection = DatabaseConfiguration.getConnection();
+            PreparedStatement preparedStatement = connection.prepareStatement(sql)){
+            preparedStatement.setInt(1, id);
+
+            try(ResultSet rs = preparedStatement.executeQuery()){
+                if(rs.next()){
+                    return retrieveCitizenFromResultSet(rs);
+                }
+            }
+        }
+        return null;
+    }
+
+    public Citizen getByName(String name) throws SQLException {
+        String sql = "SELECT * FROM citizen WHERE first_name = ? OR last_name = ?";
+
+
+        try(Connection connection = DatabaseConfiguration.getConnection();
+            PreparedStatement preparedStatement = connection.prepareStatement(sql)){
+            preparedStatement.setString(1, name);
+            preparedStatement.setString(2, name);
             try(ResultSet rs = preparedStatement.executeQuery()){
                 if(rs.next()){
                     return retrieveCitizenFromResultSet(rs);
@@ -64,16 +82,43 @@ public class CitizenDao {
     public List<Citizen> getAllCitizens() throws SQLException {
         List<Citizen> citizens = new ArrayList<>();
 
-        String sql = "SELECT * FROM citizens";
+        String sql = "SELECT * FROM citizen";
 
-        try(Connection conn = DatabaseConfiguration.getConnetion();
-        Statement statement = conn.createStatement();
-        ResultSet resultSet = statement.executeQuery(sql)) {
+        try(Connection conn = DatabaseConfiguration.getConnection();
+            Statement statement = conn.createStatement();
+            ResultSet resultSet = statement.executeQuery(sql)) {
             while (resultSet.next()){
                 citizens.add(retrieveCitizenFromResultSet(resultSet));
             }
         }
         return citizens;
+    }
+
+    public void updateCitizen(Citizen citizen) throws SQLException {
+        String sql = "UPDATE citizen SET birth_certificate_no = ?, first_name = ? , last_name = ?, national_id = ? , location = ?, ward = ?, constituency = ?, county = ?, ethnicity = ? WHERE national_id = ?";
+
+        try(Connection connection = DatabaseConfiguration.getConnection();
+            PreparedStatement preparedStatement = connection.prepareStatement(sql)){
+            preparedStatement.setInt(1, citizen.getBirthCertificateNo());
+            preparedStatement.setString(2, citizen.getFirstName());
+            preparedStatement.setString(3, citizen.getLastName());
+            preparedStatement.setInt(4, citizen.getNationalId());
+            preparedStatement.setString(5, citizen.getLocation());
+            preparedStatement.setString(6, citizen.getWard());
+            preparedStatement.setString(7, citizen.getConstituency());
+            preparedStatement.setString(8, citizen.getCounty());
+            preparedStatement.setString(9, citizen.getEthnicity());
+
+            preparedStatement.setInt(10, citizen.getNationalId());
+            int affectedRow = preparedStatement.executeUpdate();
+            if(affectedRow == 0){
+                throw new SQLException("Updating citizen failed, no rows affected");
+            }
+
+            System.out.println("Citizen updated successfully: \n" + citizen);
+
+        }
+
     }
 
     private Citizen retrieveCitizenFromResultSet(ResultSet rs) throws SQLException {
@@ -104,38 +149,7 @@ public class CitizenDao {
                 citizen.getCounty(),
                 citizen.getEthnicity()
         );
-//        citizens.add(citizen);
         return citizen;
     }
 
-//    private void addCitizen(Citizen citizen){
-//        citizens.add(citizen);
-//    }
-
-//    public List<Citizen> getAllCitizens() {
-//        return citizens;
-//    }
-
-
-//    public static Citizen getCitizenByLastName(String lastName) {
-//        for (Citizen citizen : citizens){
-//            if(lastName.equalsIgnoreCase(citizen.getLastName())){
-//                return citizen;
-//            }
-//        }
-//        return null;
-//    }
-
-//    public Citizen getCitizenByFirstName(String firstName) {
-//
-//    }
-
-
-//    public boolean deleteACitizenDao(int deleteCitizenId) {
-//        Citizen citizen = getCitizenById(deleteCitizenId);
-//        if(citizen != null){
-//            citizens.remove(citizen);
-//        }
-//        return  false;
-//    }
 }

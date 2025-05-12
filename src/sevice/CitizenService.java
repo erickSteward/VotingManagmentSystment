@@ -19,7 +19,7 @@ public class CitizenService {
   }
 
   
-  public Citizen registerCitizenService() throws SQLException {
+  public Citizen registerCitizenService() {
       System.out.println("Please register the following citizen details as prompted : ");
 
 
@@ -47,87 +47,123 @@ public class CitizenService {
       return  citizenDao.createCitizen(citizen);
   }
 
-//  public void retrievalAllCitizenService(){
-//     // if(!citizenDao.getAllCitizens().isEmpty())
-//          for (Citizen citizen1 : citizenDao.getAllCitizens()) {
-//              System.out.println(citizen1);
-//          }
-//      else
-//          System.out.println("Records Found. ");
-//  }
 
-  public void retrieveCitizenService(){
+  public void retrieveCitizenService() throws SQLException {
       System.out.println("How do you want to Retrieve Citizen's Details.");
       System.out.println("1. Retrieve All Citizens");
       System.out.println("2. Retrieve a Citizen by national ID");
       System.out.println("3. Retrieve a citizen by Name.");
+      System.out.println("4. Back");
+      int choice = getIntInput("Enter the option service you need : ");
 
-      int choice = scanner.nextInt();
+      switch(choice){
+          case 1 -> {
+              retrieveAllCitizenService();
+              retrieveCitizenService();
+          }
+          case 2 -> {
+              if(!retrieveCitizenByNationalIDService()){
+                  System.out.println("Records not found");
+              }
+
+              retrieveCitizenService();
+          }
+          case 3 -> {
+              if(!retrieveCitizenByNameService()){
+                  System.out.println("Records not found");
+              }
+              retrieveCitizenService();
+          }
+
+      }
 
   }
 
-  public boolean retrieveCitizenByNationalIDService() throws SQLException {
+  private boolean retrieveCitizenByNationalIDService() throws SQLException {
       int nationalId = getIntInput("Enter Citizen national ID: ");
 
-      if(citizenDao.getByNationalId(nationalId) != null) {
-          citizen = citizenDao.getByNationalId(nationalId);
+      citizen = citizenDao.getByNationalId(nationalId);
+
+      if(citizen != null) {
           System.out.println(citizen);
           return true;
       }
       return false;
   }
 
-
-
-  public String getStringInput(String prompt){
-      System.out.print(prompt);
-      return scanner.nextLine();
-  }
-
-  public int getIntInput(String prompt){
-      while(true){
-          try{
-              System.out.print(prompt);
-              return Integer.parseInt(scanner.nextLine());
-          } catch (NumberFormatException exception){
-              System.out.println("Invalid input. Please enter a number. ");
+  private void retrieveAllCitizenService() throws SQLException {
+      System.out.println("Retrieving service");
+      if(citizenDao.getAllCitizens() != null){
+          System.out.println("Here are all the citizens in the database");
+          for (Citizen citizen : citizenDao.getAllCitizens()){
+              System.out.println(citizen);
           }
+      } else {
+          System.out.println("No records found.");
       }
   }
 
-    public void editCitizenService() {
-      int nationalId = getIntInput("Enter national ID to Edit Citizen : ");
-     // citizen = citizenDao.getCitizenById(nationalId);
-      if(nationalId > 0 && citizen != null){
-          System.out.println("What do you want to edit " + citizen.getFirstName() + "'s details");
-          System.out.println("1. Birth Certificate Number.");
-          System.out.println("2. First Name.");
-          System.out.println("3. Last Name. ");
-          System.out.println("4. National ID.");
-          System.out.println("5. Location.");
-          System.out.println("6. Ward.");
-          System.out.println("7. Constituency.");
-          System.out.println("8. County.");
-          System.out.println("9. ethnicity");
-          int choice = getIntInput("Enter number that you need to edit : ");
-
-          switch (choice){
-              case 1 -> editCitizenBirthCertificateService(citizen);
-              case 2 -> editCitizenFirstNameService(citizen);
-              case 3 -> editCitizenLastNameService(citizen);
-              case 4 -> editCitizenNationalIdService(citizen);
-              case 5 -> editCitizenLocationService(citizen);
-              case 6 -> editCitizenWardService(citizen);
-              case 7 -> editCitizenConstituencyService(citizen);
-              case 8 -> editCitizenCountyService(citizen);
-              case 9 -> editCitizenEthnicityService(citizen);
-              default -> {
-                  System.out.println("Please select select within the above (1-9) to edit : ");
-                  editCitizenService();
-              }
-          }
+  private boolean retrieveCitizenByNameService() throws SQLException {
+      System.out.println();
+      System.out.println("To search a citizen by name, input first or last name.");
+      String name = getStringInput("Enter First or Last name of Citizen to search : ");
+      citizen = citizenDao.getByName(name);
+      if(citizen != null){
+          System.out.println(citizen);
+          return true;
+      } else {
+          System.out.println("Something went wrong with the search. ");
+          return false;
       }
+  }
+
+    public void editCitizenService() throws SQLException {
+        int nationalId = getIntInput("Enter national ID to edit citizen: ");
+
+        Citizen citizen = citizenDao.getByNationalId(nationalId);
+        if (nationalId <= 0 || citizen == null) {
+            System.out.println("Citizen not found with the given National ID.");
+            return;
+        }
+
+        System.out.println("Editing details for: " + citizen.getFirstName() + " " + citizen.getLastName());
+
+        boolean editing = true;
+        while (editing) {
+            System.out.println("\nWhat do you want to edit?");
+            System.out.println("1. Birth Certificate Number");
+            System.out.println("2. First Name");
+            System.out.println("3. Last Name");
+            System.out.println("4. National ID");
+            System.out.println("5. Location");
+            System.out.println("6. Ward");
+            System.out.println("7. Constituency");
+            System.out.println("8. County");
+            System.out.println("9. Ethnicity");
+            System.out.println("0. Finish and Save");
+
+            int choice = getIntInput("Enter the number corresponding to the field to edit: ");
+
+            switch (choice) {
+                case 1 -> editCitizenBirthCertificateService(citizen);
+                case 2 -> editCitizenFirstNameService(citizen);
+                case 3 -> editCitizenLastNameService(citizen);
+                case 4 -> editCitizenNationalIdService(citizen);
+                case 5 -> editCitizenLocationService(citizen);
+                case 6 -> editCitizenWardService(citizen);
+                case 7 -> editCitizenConstituencyService(citizen);
+                case 8 -> editCitizenCountyService(citizen);
+                case 9 -> editCitizenEthnicityService(citizen);
+                case 0 -> editing = false;
+                default -> System.out.println("Invalid choice. Please select from 0 to 9.");
+            }
+        }
+
+        // Save the changes after all edits
+        citizenDao.updateCitizen(citizen);
+        System.out.println("Citizen information updated successfully.");
     }
+
 
     private void editCitizenBirthCertificateService(Citizen citizen) {
         int editedBirthCertificateNumber = getIntInput("Type new birth certificate number : ");
@@ -184,12 +220,27 @@ public class CitizenService {
         System.out.println("Ethnicity edited to : " + citizen.getEthnicity());
     }
 
-//    public void deleteACitizenService() {
-//      int deleteCitizenId = getIntInput("Enter National ID to delete Citizen : ");
-//      if(citizenDao.deleteACitizenDao(deleteCitizenId)){
-//          System.out.println("Citizen successfully deleted");
-//      } else {
-//          System.out.println("There seem to be a problem. Please check you Id");
-//      }
-//    }
+    private String getStringInput(String prompt){
+        String input;
+        do {
+            System.out.print(prompt);
+            input = scanner.nextLine().trim();
+            if (input.isEmpty()) {
+                System.out.println("Input cannot be empty. Please try again.");
+            }
+        } while (input.isEmpty());
+        return input;
+    }
+
+    private int getIntInput(String prompt){
+        while(true){
+            try{
+                System.out.print(prompt);
+                return Integer.parseInt(scanner.nextLine());
+            } catch (NumberFormatException exception){
+                System.out.println("Invalid input. Please enter a number. ");
+            }
+        }
+    }
+
 }

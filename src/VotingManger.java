@@ -43,11 +43,9 @@ public class VotingManger {
     public void printCitizenElectoralMenu() throws SQLException {
         System.out.println("\nPlease, Choose What action you want to do: ");
         System.out.println("1. Register Citizen ");
-        System.out.println("2. View All Citizens ");
-        System.out.println("3. View a Citizen ");
-        System.out.println("4. Edit a Citizen ");
-        System.out.println("5. Delete a Citizen ");
-        System.out.println("6. Delete all Citizens");
+        System.out.println("2. View Citizens ");
+        System.out.println("3. Edit Citizen ");
+        System.out.println("4. Delete Citizen ");
         System.out.print("Make your choice : ");
         String choose = scanner.nextLine().toLowerCase().trim();
 
@@ -57,20 +55,17 @@ public class VotingManger {
                 printCitizenElectoralMenu();
             }
             case "2" -> {
-                citizenController.retrieveAllCitizens();
+                citizenController.retrieveCitizens();
                 printCitizenElectoralMenu();
             }
             case "3" -> {
-                citizenController.retrieveACitizen();
+                citizenController.editCitizen();
                 printCitizenElectoralMenu();
             }
 
             case "4" -> {
-                citizenController.editCitizen();
+                //citizenController.deleteCitizen();
                 printCitizenElectoralMenu();
-            }
-            case "5" -> {
-                citizenController.deleteACitizen();
             }
             default -> {
                 System.out.println("Please choose the appropriate number in the menu select.");

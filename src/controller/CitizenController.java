@@ -21,19 +21,13 @@ public class CitizenController {
      }
    }
 
-   public void retrieveAllCitizens(){
-       citizenServices.retrievalAllCitizenService();
+   public void retrieveCitizens() throws SQLException {
+       citizenServices.retrieveCitizenService();
    }
 
-    public void retrieveACitizen() {
-        citizenServices.retrieveCitizenService();
-    }
 
-    public void editCitizen() {
+    public void editCitizen() throws SQLException {
         citizenServices.editCitizenService();
     }
 
-    public void deleteACitizen() {
-        citizenServices.deleteACitizenService();
-    }
 }

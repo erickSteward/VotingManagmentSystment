@@ -20,7 +20,7 @@ public class DatabaseConfiguration {
         }
     }
 
-    public static Connection getConnetion() throws SQLException {
+    public static Connection getConnection() throws SQLException {
         return DriverManager.getConnection(URL, USER, PASSWORD);
     }
 }
